@@ -4,8 +4,11 @@
  */
 package co.edu.unipiloto.student.servlet;
 
+import co.edu.unipiloto.student.Estudiante;
+import co.edu.unipiloto.student.session.EstudianteFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Andres
  */
 public class StudentServlet extends HttpServlet {
+
+    @EJB
+    private EstudianteFacadeLocal estudianteFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -28,19 +34,38 @@ public class StudentServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet StudentServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet StudentServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        Estudiante estudiante = new Estudiante();
+
+        String id = request.getParameter("studentId");
+        int idEstudiante = 0;
+        int semestreEstudiante = 0;
+        String nombre = request.getParameter("firstName");
+        String apellido = request.getParameter("lastName");
+        String semestre = request.getParameter("yearLevel");
+
+        if (id != null && !id.equals("")) {
+            idEstudiante = Integer.parseInt(id);
         }
+
+        if (semestre != null && !semestre.equals("")) {
+            semestreEstudiante = Integer.parseInt(semestre);
+        }
+
+        String action = request.getParameter("action");
+
+        if (action.equals("Add")) {
+            estudiante.setEstudianteid(idEstudiante);
+            estudiante.setNombre(nombre);
+            estudiante.setApellido(apellido);
+            estudiante.setSemestre(semestreEstudiante);
+            estudianteFacade.create(estudiante);
+        }
+
+        request.setAttribute("student", estudiante);
+        request.setAttribute("allStudents", estudianteFacade.findAll());
+        request.getRequestDispatcher("StudentInfo.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
