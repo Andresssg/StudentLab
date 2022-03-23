@@ -60,6 +60,12 @@ public class StudentServlet extends HttpServlet {
             estudiante.setApellido(apellido);
             estudiante.setSemestre(semestreEstudiante);
             estudianteFacade.create(estudiante);
+        }else if(action.equals("Edit")){
+            estudiante.setEstudianteid(idEstudiante);
+            estudiante.setNombre(nombre);
+            estudiante.setApellido(apellido);
+            estudiante.setSemestre(semestreEstudiante);
+            estudianteFacade.edit(estudiante);
         }
 
         request.setAttribute("student", estudiante);
