@@ -60,18 +60,21 @@ public class StudentServlet extends HttpServlet {
             estudiante.setApellido(apellido);
             estudiante.setSemestre(semestreEstudiante);
             estudianteFacade.create(estudiante);
-        }else if(action.equals("Edit")){
+        } else if (action.equals("Edit")) {
             estudiante.setEstudianteid(idEstudiante);
             estudiante.setNombre(nombre);
             estudiante.setApellido(apellido);
             estudiante.setSemestre(semestreEstudiante);
             estudianteFacade.edit(estudiante);
-        }else if(action.equals("Delete")){
+        } else if (action.equals("Delete")) {
             estudiante.setEstudianteid(idEstudiante);
             estudiante.setNombre(nombre);
             estudiante.setApellido(apellido);
             estudiante.setSemestre(semestreEstudiante);
             estudianteFacade.remove(estudiante);
+        } else {
+            estudiante.setEstudianteid(idEstudiante);
+            request.setAttribute("allStudents", estudianteFacade.find(estudiante.getEstudianteid()));
         }
 
         request.setAttribute("student", estudiante);
