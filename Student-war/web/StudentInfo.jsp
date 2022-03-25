@@ -48,12 +48,12 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Year Level</th>
-                <c:forEach items="${allStudents}" var="stud">
+                <c:forEach items="${allStudents}" var="student">
                 <tr>
-                    <td>${stud.estudianteid}</td>
-                    <td>${stud.nombre}</td>
-                    <td>${stud.apellido}</td>
-                    <td>${stud.semestre}</td>
+                    <td>${student.estudianteid}</td>
+                    <td>${student.nombre}</td>
+                    <td>${student.apellido}</td>
+                    <td>${student.semestre}</td>
                 </tr>
             </c:forEach> 
         </table>

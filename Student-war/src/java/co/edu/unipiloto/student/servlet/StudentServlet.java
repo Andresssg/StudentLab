@@ -73,8 +73,7 @@ public class StudentServlet extends HttpServlet {
             estudiante.setSemestre(semestreEstudiante);
             estudianteFacade.remove(estudiante);
         } else {
-            estudiante.setEstudianteid(idEstudiante);
-            request.setAttribute("allStudents", estudianteFacade.find(estudiante.getEstudianteid()));
+            request.setAttribute("allStudents", estudianteFacade.findAll());
         }
 
         request.setAttribute("student", estudiante);
