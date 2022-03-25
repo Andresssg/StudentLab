@@ -55,7 +55,7 @@ public class StudentServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if (action.equals("Add")) {
-            estudiante.setEstudianteid(idEstudiante);
+            //estudiante.setEstudianteid(idEstudiante);
             estudiante.setNombre(nombre);
             estudiante.setApellido(apellido);
             estudiante.setSemestre(semestreEstudiante);
