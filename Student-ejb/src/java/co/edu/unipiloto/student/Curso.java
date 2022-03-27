@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package co.edu.unipiloto.course;
+package co.edu.unipiloto.student;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,10 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,7 +41,6 @@ public class Curso implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "CODIGOCURSO")
     private Integer codigocurso;
     @Size(max = 50)
@@ -50,6 +52,8 @@ public class Curso implements Serializable {
     private Integer semestre;
     @Column(name = "ESTUDIANTESADMITIDOS")
     private Integer estudiantesadmitidos;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "curso")
+    private Collection<EstudiantePorCurso> estudiantePorCursoCollection;
 
     public Curso() {
     }
@@ -98,6 +102,15 @@ public class Curso implements Serializable {
         this.estudiantesadmitidos = estudiantesadmitidos;
     }
 
+    @XmlTransient
+    public Collection<EstudiantePorCurso> getEstudiantePorCursoCollection() {
+        return estudiantePorCursoCollection;
+    }
+
+    public void setEstudiantePorCursoCollection(Collection<EstudiantePorCurso> estudiantePorCursoCollection) {
+        this.estudiantePorCursoCollection = estudiantePorCursoCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -120,7 +133,7 @@ public class Curso implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.unipiloto.course.Curso[ codigocurso=" + codigocurso + " ]";
+        return "co.edu.unipiloto.student.Curso[ codigocurso=" + codigocurso + " ]";
     }
-
+    
 }

@@ -2,11 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package co.edu.unipiloto.student.servlet;
+package co.edu.unipiloto.course.servlet;
 
-import co.edu.unipiloto.student.Estudiante;
-import co.edu.unipiloto.student.session.EstudianteFacadeLocal;
+
+import co.edu.unipiloto.student.Curso;
+import co.edu.unipiloto.student.session.CursoFacadeLocal;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Andres
  */
-public class StudentServlet extends HttpServlet {
+public class CourseServlet extends HttpServlet {
 
     @EJB
-    private EstudianteFacadeLocal estudianteFacade;
+    private CursoFacadeLocal cursoFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,50 +35,66 @@ public class StudentServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Curso curso = new Curso();
 
-        Estudiante estudiante = new Estudiante();
+        String codigoCurso = request.getParameter("codigoCurso");
+        int codigo = 0;
 
-        String id = request.getParameter("studentId");
-        int idEstudiante = 0;
-        int semestreEstudiante = 0;
-        String nombre = request.getParameter("firstName");
-        String apellido = request.getParameter("lastName");
-        String semestre = request.getParameter("yearLevel");
+        String nombreCurso = request.getParameter("nombreCurso");
 
-        if (id != null && !id.equals("")) {
-            idEstudiante = Integer.parseInt(id);
+        String creditosCurso = request.getParameter("creditos");
+        int creditos = 0;
+
+        String semestreCurso = request.getParameter("semestre");
+        int semestre = 0;
+
+        String estudiantes = request.getParameter("estudiantesAdmitidos");
+        int estudiantesAdmitidos = 0;
+
+        if (codigoCurso != null && !codigoCurso.equals("")) {
+            codigo = Integer.parseInt(codigoCurso);
         }
 
-        if (semestre != null && !semestre.equals("")) {
-            semestreEstudiante = Integer.parseInt(semestre);
+        if (semestreCurso != null && !semestreCurso.equals("")) {
+            semestre = Integer.parseInt(semestreCurso);
         }
 
-        String action = request.getParameter("action");
+        if (creditosCurso != null && !creditosCurso.equals("")) {
+            creditos = Integer.parseInt(creditosCurso);
+        }
+
+        if (estudiantes != null && !estudiantes.equals("")) {
+            estudiantesAdmitidos = Integer.parseInt(semestreCurso);
+        }
+
+        String action = request.getParameter("action2");
 
         if (action.equals("Add")) {
-            //estudiante.setEstudianteid(idEstudiante);
-            estudiante.setNombre(nombre);
-            estudiante.setApellido(apellido);
-            estudiante.setSemestre(semestreEstudiante);
-            estudianteFacade.create(estudiante);
+            curso.setNombrecurso(nombreCurso);
+            curso.setCreditos(creditos);
+            curso.setSemestre(semestre);
+            curso.setEstudiantesadmitidos(estudiantesAdmitidos);
+            cursoFacade.create(curso);
         } else if (action.equals("Edit")) {
-            estudiante.setEstudianteid(idEstudiante);
-            estudiante.setNombre(nombre);
-            estudiante.setApellido(apellido);
-            estudiante.setSemestre(semestreEstudiante);
-            estudianteFacade.edit(estudiante);
+            curso.setCodigocurso(codigo);
+            curso.setNombrecurso(nombreCurso);
+            curso.setCreditos(creditos);
+            curso.setSemestre(semestre);
+            curso.setEstudiantesadmitidos(estudiantesAdmitidos);
+            cursoFacade.edit(curso);
         } else if (action.equals("Delete")) {
-            estudiante.setEstudianteid(idEstudiante);
-            estudiante.setNombre(nombre);
-            estudiante.setApellido(apellido);
-            estudiante.setSemestre(semestreEstudiante);
-            estudianteFacade.remove(estudiante);
+            curso.setCodigocurso(codigo);
+            curso.setNombrecurso(nombreCurso);
+            curso.setCreditos(creditos);
+            curso.setSemestre(semestre);
+            curso.setEstudiantesadmitidos(estudiantesAdmitidos);
+            cursoFacade.remove(curso);
         } else {
-            request.setAttribute("allStudents", estudianteFacade.findAll());
+            request.setAttribute("cursos", cursoFacade.findAll());
         }
 
-        request.setAttribute("student", estudiante);
-        request.setAttribute("allStudents", estudianteFacade.findAll());
+        request.setAttribute("curso", curso);
+        request.setAttribute("cursos", cursoFacade.findAll());
         request.getRequestDispatcher("StudentInfo.jsp").forward(request, response);
 
     }

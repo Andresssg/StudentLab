@@ -5,7 +5,9 @@
 package co.edu.unipiloto.student;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,10 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,7 +40,6 @@ public class Estudiante implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ESTUDIANTEID")
     private Integer estudianteid;
     @Size(max = 50)
@@ -48,6 +50,8 @@ public class Estudiante implements Serializable {
     private String apellido;
     @Column(name = "SEMESTRE")
     private Integer semestre;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudiante")
+    private Collection<EstudiantePorCurso> estudiantePorCursoCollection;
 
     public Estudiante() {
     }
@@ -88,6 +92,15 @@ public class Estudiante implements Serializable {
         this.semestre = semestre;
     }
 
+    @XmlTransient
+    public Collection<EstudiantePorCurso> getEstudiantePorCursoCollection() {
+        return estudiantePorCursoCollection;
+    }
+
+    public void setEstudiantePorCursoCollection(Collection<EstudiantePorCurso> estudiantePorCursoCollection) {
+        this.estudiantePorCursoCollection = estudiantePorCursoCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -112,5 +125,5 @@ public class Estudiante implements Serializable {
     public String toString() {
         return "co.edu.unipiloto.student.Estudiante[ estudianteid=" + estudianteid + " ]";
     }
-
+    
 }

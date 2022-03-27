@@ -4,9 +4,33 @@
         <servlet-name>StudentServlet</servlet-name>
         <servlet-class>co.edu.unipiloto.student.servlet.StudentServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CursoServlet</servlet-name>
+        <servlet-class>co.edu.unipiloto.course.servlet.CourseServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CourseServlet</servlet-name>
+        <servlet-class>co.edu.unipiloto.course.servlet.CourseServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GradesServlet</servlet-name>
+        <servlet-class>co.edu.unipiloto.grades.servlet.GradesServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>StudentServlet</servlet-name>
         <url-pattern>/StudentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CursoServlet</servlet-name>
+        <url-pattern>/CursoServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseServlet</servlet-name>
+        <url-pattern>/CourseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GradesServlet</servlet-name>
+        <url-pattern>/GradesServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

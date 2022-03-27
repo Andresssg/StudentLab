@@ -57,5 +57,97 @@
                 </tr>
             </c:forEach> 
         </table>
+        <br><hr>
+        <h1>Course Information</h1>
+        <form action="./CourseServlet" method="POST">
+            <table>
+                <tr>
+                    <td>Codigo Curso</td>
+                    <td><input type="text" name="codigoCurso" value="${curso.codigocurso}" /></td>
+                </tr>
+                <tr>
+                    <td>Nombre Curso</td>
+                    <td><input type="text" name="nombreCurso" value="${curso.nombrecurso}" /></td>
+                </tr>
+                <tr>
+                    <td>Creditos</td>
+                    <td><input type="text" name="creditos" value="${curso.creditos}" /></td>
+                </tr>
+                <tr>
+                    <td>Semestre</td>
+                    <td><input type="text" name="semestre" value="${curso.semestre}" /></td>
+                </tr>
+                <tr>
+                    <td>Estudiantes Admitidos</td>
+                    <td><input type="text" name="estudiantesAdmitidos" value="${curso.estudiantesadmitidos}" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" name="action2" value="Add" />
+                        <input type="submit" name="action2" value="Edit" />
+                        <input type="submit" name="action2" value="Delete" />
+                        <input type="submit" name="action2" value="Search" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <br>
+        <table border="1">
+            <th>Codigo Curso</th>
+            <th>Nombre Curso</th>
+            <th>Creditos</th>
+            <th>Semestre</th>
+            <th>Estudiantes Admitidos</th>
+                <c:forEach items="${cursos}" var="curso">
+                <tr>
+                    <td>${curso.codigocurso}</td>
+                    <td>${curso.nombrecurso}</td>
+                    <td>${curso.creditos}</td>
+                    <td>${curso.semestre}</td>
+                    <td>${curso.estudiantesadmitidos}</td>
+                </tr>
+            </c:forEach> 
+        </table>
+        <br><hr>
+        <h1>Students' Grades by course</h1>
+        <form action="./GradesServlet" method="POST">
+            <table>
+                <tr>
+                    <td>Estudiante id</td>
+                    <td><input type="text" name="codigoCurso" value="${grades.estudianteid}" /></td>
+                </tr>
+                <tr>
+                    <td>Codigo Curso</td>
+                    <td><input type="text" name="nombreCurso" value="${grades.codigocurso}" /></td>
+                </tr>
+                <tr>
+                    <td>Nota Definitiva</td>
+                    <td><input type="text" name="creditos" value="${grades.notadefinitiva}" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" name="action3" value="Add" />
+                        <input type="submit" name="action3" value="Edit" />
+                        <input type="submit" name="action3" value="Delete" />
+                        <input type="submit" name="action3" value="Search" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <br>
+        <table border="1">
+            <th>Estudiante id</th>
+            <th>Codigo Curso</th>
+            <th>Nota Definitiva</th>
+            <th>Aprobado</th>
+                <c:forEach items="${grades}" var="info">
+                <tr>
+                    <td>${info.estudianteid}</td>
+                    <td>${info.codigocurso}</td>
+                    <td>${info.notadefinitiva}</td>
+                    <td>${info.aprobado}</td>
+                </tr>
+            </c:forEach> 
+        </table>
     </body>
 </html>
