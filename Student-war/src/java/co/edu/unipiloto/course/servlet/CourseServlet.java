@@ -64,7 +64,7 @@ public class CourseServlet extends HttpServlet {
         }
 
         if (estudiantes != null && !estudiantes.equals("")) {
-            estudiantesAdmitidos = Integer.parseInt(semestreCurso);
+            estudiantesAdmitidos = Integer.parseInt(estudiantes);
         }
 
         String action = request.getParameter("action2");

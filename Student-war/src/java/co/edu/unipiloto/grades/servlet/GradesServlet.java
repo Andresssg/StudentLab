@@ -4,8 +4,12 @@
  */
 package co.edu.unipiloto.grades.servlet;
 
+import co.edu.unipiloto.student.EstudiantePorCurso;
+import co.edu.unipiloto.student.EstudiantePorCursoPK;
+import co.edu.unipiloto.student.session.EstudiantePorCursoFacadeLocal;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
  * @author Andres
  */
 public class GradesServlet extends HttpServlet {
+
+    @EJB
+    private EstudiantePorCursoFacadeLocal estudiantePorCursoFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -28,7 +35,46 @@ public class GradesServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+        EstudiantePorCursoPK estudiantePorCursoPK;
+        String estudianteIDStr = request.getParameter("gradesEstudianteID");
+        int estudianteID = 0;
+        String codigoCursoStr = request.getParameter("gradesCodigoCurso");
+        int codigoCurso = 0;
+        String nota = request.getParameter("notaDefinitiva");
+        double notaDefinitiva = 0;
+
+        if (estudianteIDStr != null && !"".equals(estudianteIDStr)) {
+            estudianteID = Integer.parseInt(estudianteIDStr);
+        }
+        if (codigoCursoStr != null && !"".equals(codigoCursoStr)) {
+            codigoCurso = Integer.parseInt(codigoCursoStr);
+        }
+        if (nota != null && !"".equals(nota)) {
+            notaDefinitiva = Double.parseDouble(nota);
+        }
+
+        estudiantePorCursoPK = new EstudiantePorCursoPK(estudianteID, codigoCurso);
+
+        EstudiantePorCurso estudiantePorCurso = new EstudiantePorCurso(estudiantePorCursoPK);
+        estudiantePorCurso.setNotaDefinitiva(notaDefinitiva);
+        estudiantePorCurso.setAprobado(notaDefinitiva >= 3.0);
+
+        String action = request.getParameter("action3");
+        if (action.equals("Add")) {
+            estudiantePorCursoFacade.create(estudiantePorCurso);
+        } else if (action.equals("Edit")) {
+            estudiantePorCursoFacade.edit(estudiantePorCurso);
+        } else if (action.equals("Delete")) {
+            estudiantePorCursoFacade.remove(estudiantePorCurso);
+        } else if (action.equals("Search")) {
+            request.setAttribute("grades", estudiantePorCursoFacade.findAll());
+        }
+
+        request.setAttribute("grade", estudiantePorCurso);
+        request.setAttribute("grades", estudiantePorCursoFacade.findAll());
+        request.getRequestDispatcher("StudentInfo.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

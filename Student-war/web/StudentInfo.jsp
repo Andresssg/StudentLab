@@ -113,16 +113,16 @@
         <form action="./GradesServlet" method="POST">
             <table>
                 <tr>
-                    <td>Estudiante id</td>
-                    <td><input type="text" name="codigoCurso" value="${grades.estudianteid}" /></td>
+                    <td>Estudiante Id</td>
+                    <td><input type="text" name="gradesEstudianteID" value="${grade.estudiante.estudianteid}" /></td>
                 </tr>
                 <tr>
                     <td>Codigo Curso</td>
-                    <td><input type="text" name="nombreCurso" value="${grades.codigocurso}" /></td>
+                    <td><input type="text" name="gradesCodigoCurso" value="${grade.curso.codigocurso}" /></td>
                 </tr>
                 <tr>
                     <td>Nota Definitiva</td>
-                    <td><input type="text" name="creditos" value="${grades.notadefinitiva}" /></td>
+                    <td><input type="text" name="notaDefinitiva" value="${grade.notaDefinitiva}" /></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -136,15 +136,15 @@
         </form>
         <br>
         <table border="1">
-            <th>Estudiante id</th>
+            <th>Estudiante Id</th>
             <th>Codigo Curso</th>
             <th>Nota Definitiva</th>
             <th>Aprobado</th>
                 <c:forEach items="${grades}" var="info">
                 <tr>
-                    <td>${info.estudianteid}</td>
-                    <td>${info.codigocurso}</td>
-                    <td>${info.notadefinitiva}</td>
+                    <td>${info.estudiante.estudianteid}</td>
+                    <td>${info.curso.codigocurso}</td>
+                    <td>${info.notaDefinitiva}</td>
                     <td>${info.aprobado}</td>
                 </tr>
             </c:forEach> 
